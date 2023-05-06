@@ -59,7 +59,7 @@ And DONE! Your api is now running.
 it still keeps all the conversation history <br />
 -- Endpoint: `http://127.0.0.1:5000/generate` <br />
 -- Method: `GET` <br />
--- URL Request Example: http://localhost:5000/generate?prompt="What%20was%20the%20name%20of%20the%203rd%20US%20president?"
+-- URL Example: http://localhost:5000/generate?prompt="What%20was%20the%20name%20of%20the%203rd%20US%20president?"
 -- Request Body:
 
 ```json

@@ -16,12 +16,12 @@ def generate():
     gpt.wait_for_generate()
     response = gpt.get_response()
     print(f"*** Response: {response}")
-    return response
+    return {"response": response}
     
 @app.route('/new_chat', methods=['GET'])
 def new_chat():
     if gpt.new_chat():
-        return "Created New Chat"
+        return {"status": "Created New Chat"}
 
 if __name__ == '__main__':
     app.run()

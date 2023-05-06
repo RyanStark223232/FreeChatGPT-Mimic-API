@@ -7,7 +7,6 @@ Created on Thu May  4 20:58:30 2023
 
 import undetected_chromedriver as uc 
 from selenium.webdriver.remote.webdriver import By
-from bs4 import BeautifulSoup
 import re
 import time 
 
