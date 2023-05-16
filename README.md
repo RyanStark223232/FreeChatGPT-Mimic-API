@@ -49,11 +49,11 @@ And DONE! Your api is now running.
 it still keeps all the conversation history <br />
 * Endpoint: `http://127.0.0.1:5000/generate` <br />
 * Method: `GET` <br />
-* URL Example: http://localhost:5000/generate?prompt="What%20was%20the%20name%20of%20the%203rd%20US%20president?"
+* URL Example: http://localhost:5000/generate?prompt="who is the 3rd US president?"
 * Request Body:
 
 ```json
-{"prompt": "Who is the 3rd president in US?"} 
+{"prompt": "who is the 3rd US president?"} 
 ```
 
 * Response Body:
