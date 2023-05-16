@@ -1,8 +1,11 @@
 from flask import Flask, request
 from ChatGPT_Mimic_API import ChatGPT_Mimic_API
 
-gpt = ChatGPT_Mimic_API()
-gpt.go_to()
+with open("id_pass.txt", "r") as fp:
+    splited = fp.read().split("\n")
+    username, password = splited[0], splited[1]
+gpt = ChatGPT_Mimic_API(username, password)
+gpt.login()
 
 app = Flask(__name__)
 
@@ -10,8 +13,8 @@ app = Flask(__name__)
 def generate():
     prompt = request.args.get('prompt')
     print(f"*** Received Prompt: {prompt}")
-    gpt.enter_text(prompt)
-    gpt.click_send()
+    gpt.fill_textarea(prompt, "textarea[placeholder='Send a message.']")
+    gpt.click_button("button[class*='bottom']")
     print("*** Waiting for Generation")
     gpt.wait_for_generate()
     response = gpt.get_response()

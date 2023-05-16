@@ -9,33 +9,60 @@ import undetected_chromedriver as uc
 from selenium.webdriver.remote.webdriver import By
 import re
 import time 
+import random
 
 class ChatGPT_Mimic_API:
-    def __init__(self):
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
         options = uc.ChromeOptions()
+        options.add_argument("--start-maximized")
         self.driver = uc.Chrome(use_subprocess=True, options=options)
+        self.driver.set_window_size(800, 600)
+
+    def _wait_between(self, min_value, max_value):
+        random_float = random.uniform(min_value, max_value)
+        time.sleep(random_float)
+
+    def login(self):
+        self.go_to()
+        self.click_button("button[class='btn relative btn-primary']")
+        self.fill_input(self.username, "username")
+        self.click_button("button[class*='_button-login-id']")
+        self.fill_input(self.password, "password")
+        self.click_button("button[class*='_button-login-password']")
+        self.click_button("button[class='btn relative btn-neutral ml-auto']")
+        self.click_button("button[class='btn relative btn-neutral ml-auto']")
+        self.click_button("button[class='btn relative btn-primary ml-auto']")
+        return True
 
     def go_to(self, url = "https://chat.openai.com/"):
         time.sleep(0.5)
         self.driver.get(url)
-        input("Please Input All Necessary Information Until You See the Textarea, Then Press Enter in the Command Prompt")
+        self._wait_between(0.5, 1)
 
-    def enter_text(self, text, css_selector = "textarea[placeholder='Send a message.']"):
-        textarea = self.driver.find_element(By.CSS_SELECTOR, css_selector)
-        textarea.send_keys(text)
-        time.sleep(0.5)
-
-    def click_send(self, css_selector = "button[class*='bottom']"):
+    def click_button(self, css_selector = "button[class='btn relative btn-primary']"):
         button = self.driver.find_element(By.CSS_SELECTOR, css_selector)
         button.click()
-        time.sleep(0.5)
+        self._wait_between(2, 2.5)
+
+    def fill_textarea(self, text, css_selector = "textarea[placeholder='Send a message.']"):
+        textarea = self.driver.find_element(By.CSS_SELECTOR, css_selector)
+        textarea.send_keys(text)
+        self._wait_between(2, 2.5)
+
+    def fill_input(self, text, element_id = "username"):
+        input_element = self.driver.find_element(By.ID, element_id)
+        input_element.clear()
+        input_element.send_keys(text)
+        self._wait_between(2, 2.5)
     
     def wait_for_generate(self,):
-        count = 12
-        time.sleep(5)
+        count = 60
+        self._wait_between(5, 10)
         last_response = self.get_response()
         while (count > 0):
-            time.sleep(5)
+            self._wait_between(2, 2.5)
             current_response = self.get_response()
             
             if current_response == last_response:
@@ -44,7 +71,7 @@ class ChatGPT_Mimic_API:
                 last_response = current_response
             count -= 1
         if count <= 0:
-            raise Exception("Timeout: Generation took more than 1 minute.")
+            raise Exception("Timeout: Generation took more than 5 minute.")
         return True
     
     def get_response(self, index = -1):
@@ -66,12 +93,19 @@ class ChatGPT_Mimic_API:
         self.driver.quit()
         
 if __name__ == "__main__":
-    crawler = ChatGPT_Mimic_API()
-    urls = crawler.go_to()
-    crawler.enter_text("Write a 2 lines resume.")
-    crawler.click_send()
+    with open("id_pass.txt", "r") as fp:
+        splited = fp.read().split("\n")
+        username, password = splited[0], splited[1]
+    crawler = ChatGPT_Mimic_API(username, password)
+
+    # Login Procedure
+    crawler.login()
+
+    # Example Input
+    crawler.fill_textarea("Write something that sounds funny involving rick and ichigo", "textarea[placeholder='Send a message.']")
+    crawler.click_button("button[class*='bottom']")
     crawler.wait_for_generate()
     response = crawler.get_response()
-    print(response)
-    input()
+    print(f"***Generated Response {response}")
+    
     crawler.exit_driver()
