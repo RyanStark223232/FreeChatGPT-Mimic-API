@@ -44,10 +44,17 @@ And DONE! Your api is now running.
 <h3>API: generate</h3>
 * Descritpion: This will basically type into the textarea, press send, and wait till the response is completed. Note that if you don't call new_chat, 
 it still keeps all the conversation history <br />
+<<<<<<< HEAD
 * Endpoint: `http://127.0.0.1:5000/generate` <br />
 * Method: `GET` <br />
 * URL Example: http://localhost:5000/generate?prompt="What%20was%20the%20name%20of%20the%203rd%20US%20president?"
 * Request Body:
+=======
+-- Endpoint: `http://127.0.0.1:5000/generate` <br />
+-- Method: `GET` <br />
+-- URL Example: http://localhost:5000/generate?prompt="What%20was%20the%20name%20of%20the%203rd%20US%20president?" <br />
+-- Request Body:
+>>>>>>> fa5166393441358caec966d5cab0a639f7fbc776
 
 ```json
 {"prompt": "Who is the 3rd president in US?"} 
