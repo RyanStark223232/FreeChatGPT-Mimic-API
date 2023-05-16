@@ -26,9 +26,11 @@ Hope you all value the importance of responsible usage and allow everyone to mak
 We all deserve to make our life a bit easier, right?</li>
 <li>Step 3: Input your username and password in the id_pass.txt </li>
 <li>Step 4: Run the following command. You should see a small chrome window opening and automatically input all the information </li>
-   ```bat
-   python app.py
-   ```
+   
+```bat
+python app.py
+```
+   
 Wait until you see the following message pops up and DO NOT close the chrome window
 
 ```bat
@@ -42,19 +44,13 @@ And DONE! Your api is now running.
 <h2>API</h2>
 
 <h3>API: generate</h3>
+
 * Descritpion: This will basically type into the textarea, press send, and wait till the response is completed. Note that if you don't call new_chat, 
 it still keeps all the conversation history <br />
-<<<<<<< HEAD
 * Endpoint: `http://127.0.0.1:5000/generate` <br />
 * Method: `GET` <br />
 * URL Example: http://localhost:5000/generate?prompt="What%20was%20the%20name%20of%20the%203rd%20US%20president?"
 * Request Body:
-=======
--- Endpoint: `http://127.0.0.1:5000/generate` <br />
--- Method: `GET` <br />
--- URL Example: http://localhost:5000/generate?prompt="What%20was%20the%20name%20of%20the%203rd%20US%20president?" <br />
--- Request Body:
->>>>>>> fa5166393441358caec966d5cab0a639f7fbc776
 
 ```json
 {"prompt": "Who is the 3rd president in US?"} 
