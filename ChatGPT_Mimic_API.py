@@ -16,7 +16,7 @@ class ChatGPT_Mimic_API:
         self.username = username
         self.password = password
         options = uc.ChromeOptions()
-        options.add_argument("--start-maximized")
+        options.add_argument("--start-minimized")
         self.driver = uc.Chrome(use_subprocess=True, options=options)
         self.driver.set_window_size(800, 600)
 
@@ -41,21 +41,36 @@ class ChatGPT_Mimic_API:
         self.driver.get(url)
         self._wait_between(0.5, 1)
 
-    def click_button(self, css_selector = "button[class='btn relative btn-primary']"):
-        button = self.driver.find_element(By.CSS_SELECTOR, css_selector)
-        button.click()
-        self._wait_between(2, 2.5)
+    def click_button(self, css_selector = "button[class='btn relative btn-primary']", layer = 0):
+        if layer >= 5: raise Exception("Waited too long")
+        try:
+            button = self.driver.find_element(By.CSS_SELECTOR, css_selector)
+            button.click()
+        except:
+            self._wait_between(0.5, 1)
+            self.click_button(css_selector, layer + 1)
+        self._wait_between(0.5, 1)
 
-    def fill_textarea(self, text, css_selector = "textarea[placeholder='Send a message.']"):
-        textarea = self.driver.find_element(By.CSS_SELECTOR, css_selector)
-        textarea.send_keys(text)
-        self._wait_between(2, 2.5)
+    def fill_textarea(self, text, css_selector = "textarea[placeholder='Send a message.']", layer = 0):
+        if layer >= 5: raise Exception("Waited too long")
+        try:
+            textarea = self.driver.find_element(By.CSS_SELECTOR, css_selector)
+            textarea.send_keys(text)
+        except:
+            self._wait_between(0.5, 1)
+            self.fill_textarea(text, css_selector, layer + 1)
+        self._wait_between(0.5, 1)
 
-    def fill_input(self, text, element_id = "username"):
-        input_element = self.driver.find_element(By.ID, element_id)
-        input_element.clear()
-        input_element.send_keys(text)
-        self._wait_between(2, 2.5)
+    def fill_input(self, text, element_id = "username", layer = 0):
+        if layer >= 5: raise Exception("Waited too long")
+        try:
+            input_element = self.driver.find_element(By.ID, element_id)
+            input_element.clear()
+            input_element.send_keys(text)
+        except:
+            self._wait_between(0.5, 1)
+            self.fill_input(text, element_id, layer + 1)
+        self._wait_between(0.5, 1)
     
     def wait_for_generate(self,):
         count = 60
