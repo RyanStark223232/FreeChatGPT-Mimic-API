@@ -1,5 +1,6 @@
 from flask import Flask, request
 from ChatGPT_Mimic_API import ChatGPT_Mimic_API
+import json
 
 with open("id_pass.txt", "r") as fp:
     splited = fp.read().split("\n")
@@ -12,8 +13,7 @@ app = Flask(__name__)
 @app.route('/generate', methods=['GET'])
 def generate():
     prompt = request.args.get('prompt')
-    print(f"*** Received Prompt: {prompt}")
-    gpt.fill_textarea(prompt, "textarea[placeholder='Send a message.']")
+    gpt.fill_textarea(json.dumps(prompt), "textarea[placeholder='Send a message.']")
     gpt.click_button("button[class*='bottom']")
     print("*** Waiting for Generation")
     gpt.wait_for_generate()
@@ -25,6 +25,11 @@ def generate():
 def new_chat():
     if gpt.new_chat():
         return {"status": "Created New Chat"}
+
+@app.route('/exit_driver', methods=['GET'])
+def exit_driver():
+    gpt.exit_driver()
+    return {"status": "Exited"}
 
 if __name__ == '__main__':
     app.run()
