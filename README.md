@@ -19,7 +19,7 @@ Hope you all value the importance of responsible usage and allow everyone to mak
    ```bat
    git clone https://github.com/RyanStark223232/FreeChatGPT-Mimic-API/
    cd FreeChatGPT-Mimic-API
-   pip install requirements.txt
+   pip install -r requirements.txt
    ```
    
 <li>Step 2: Setup Selenium Chrome Driver by following https://chromedriver.chromium.org/getting-started, or just ask ChatGPT. 
