@@ -51,7 +51,7 @@ class ChatGPT_Mimic_API:
             self.click_button(css_selector, layer + 1)
         self._wait_between(0.5, 1)
 
-    def fill_textarea(self, text, css_selector = "textarea[placeholder='Send a message.']", layer = 0):
+    def fill_textarea(self, text, css_selector = "textarea[placeholder*='Send a message']", layer = 0):
         if layer >= 10: raise Exception("Waited too long")
         try:
             textarea = self.driver.find_element(By.CSS_SELECTOR, css_selector)

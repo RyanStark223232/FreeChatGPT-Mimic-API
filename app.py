@@ -13,7 +13,7 @@ app = Flask(__name__)
 @app.route('/generate', methods=['GET'])
 def generate():
     prompt = request.args.get('prompt')
-    gpt.fill_textarea(json.dumps(prompt), "textarea[placeholder='Send a message.']")
+    gpt.fill_textarea(json.dumps(prompt), "textarea[placeholder*='Send a message']")
     gpt.click_button("button[class*='bottom']")
     print("*** Waiting for Generation")
     gpt.wait_for_generate()
